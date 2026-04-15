@@ -1,0 +1,40 @@
+from main_live import run_simulation
+
+
+thresholds = [0.02, 0.03, 0.05, 0.07]
+take_profits = [0.02, 0.03, 0.05]
+stop_losses = [-0.02, -0.03, -0.05]
+edge_size_multipliers = [50, 100, 150, 200, 250]
+
+
+def run_batch():
+    total_runs = (
+        len(thresholds)
+        * len(take_profits)
+        * len(stop_losses)
+        * len(edge_size_multipliers)
+    )
+
+    run_count = 0
+
+    for threshold in thresholds:
+        for take_profit in take_profits:
+            for stop_loss in stop_losses:
+                for esm in edge_size_multipliers:
+                    run_count += 1
+
+                    print(
+                        f"\nRUN {run_count}/{total_runs} | "
+                        f"thr={threshold}, tp={take_profit}, sl={stop_loss}, esm={esm}"
+                    )
+
+                    run_simulation(
+                        threshold=threshold,
+                        take_profit=take_profit,
+                        stop_loss=stop_loss,
+                        edge_size_multiplier=esm
+                    )
+
+
+if __name__ == "__main__":
+    run_batch()
